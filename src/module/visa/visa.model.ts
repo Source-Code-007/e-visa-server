@@ -4,7 +4,7 @@ import { TVisa } from "./visa.interface";
 const visaSchema = new mongoose.Schema<TVisa>({
   userImg: { type: String, required: true },
   userQrCodeImg: { type: String, required: true },
-  
+
   visaApplicationStatus: { type: String, required: true },
   applicationStatusDate: { type: String, required: true },
   referenceNumber: { type: String, required: true },
@@ -26,3 +26,4 @@ const visaSchema = new mongoose.Schema<TVisa>({
 const Visa = model<TVisa>("Visa", visaSchema);
 
 export default Visa;
+

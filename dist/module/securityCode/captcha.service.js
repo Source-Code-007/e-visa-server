@@ -12,29 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-const mongoose_1 = __importDefault(require("mongoose"));
-let server;
-server = app_1.default.listen(process.env.PORT, () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield mongoose_1.default.connect(process.env.MONGO_URI);
-        console.log(`😀 Database connected at port ${process.env.PORT}`);
-    }
-    catch (error) {
-        console.log(`😡 Failed to connect with db - ${error.message}`);
-    }
-}));
-// stop server when async errors
-process.on('unhandledRejection', () => {
-    console.log('😡 UNHANDLED REJECTION! Shutting down...');
-    if (server) {
-        server.close(() => {
-            process.exit(1);
-        });
-    }
+exports.SecurityCodeServices = void 0;
+const securityCode_model_1 = __importDefault(require("./securityCode.model"));
+const createSecurityCode = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield securityCode_model_1.default.create(payload);
+    return result;
 });
-// stop server when sync errors
-process.on('uncaughtException', () => {
-    console.log('😡 UNCAUGHT EXCEPTION! Shutting down...');
-    process.exit(1);
+const getAllSecurityCode = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield securityCode_model_1.default.find({});
+    return result;
 });
+exports.SecurityCodeServices = {
+    createSecurityCode,
+    getAllSecurityCode,
+};
