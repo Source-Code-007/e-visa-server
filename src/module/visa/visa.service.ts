@@ -9,8 +9,8 @@ const getAllVisa = async () => {
   const result = await Visa.find();
   return result;
 };
-const getSingleVisa = async (id: string) => {
-  const result = await Visa.findById(id);
+const getSingleVisa = async (referenceNumber: string) => {
+  const result = await Visa.findOne({referenceNumber});
   return result;
 };
 const deleteVisa = async (id: string) => {
