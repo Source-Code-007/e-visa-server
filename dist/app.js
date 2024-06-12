@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 require("dotenv/config");
-const visa_route_1 = require("./module/visa/visa.route");
-const captcha_route_1 = require("./module/captcha/captcha.route");
-const errHandler_1 = require("./middleware/errHandler");
-const securityCode_route_1 = require("./module/securityCode/securityCode.route");
+const captcha_route_1 = require("./app/module/captcha/captcha.route");
+const visa_route_1 = require("./app/module/visa/visa.route");
+const securityCode_route_1 = require("./app/module/securityCode/securityCode.route");
+const errHandler_1 = require("./app/middleware/errHandler");
 const app = (0, express_1.default)();
 // Parser
 app.use((0, cors_1.default)());

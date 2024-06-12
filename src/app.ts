@@ -1,10 +1,11 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import { visaRouter } from "./module/visa/visa.route";
-import { captchaRouter } from "./module/captcha/captcha.route";
-import { globalErrHandler, notFoundErrHandler } from "./middleware/errHandler";
-import { securityCodeRouter } from "./module/securityCode/securityCode.route";
+import { captchaRouter } from "./app/module/captcha/captcha.route";
+import { visaRouter } from "./app/module/visa/visa.route";
+import { securityCodeRouter } from "./app/module/securityCode/securityCode.route";
+import { globalErrHandler, notFoundErrHandler } from "./app/middleware/errHandler";
+
 
 const app = express();
 
