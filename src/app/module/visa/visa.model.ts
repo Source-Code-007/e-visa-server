@@ -15,7 +15,7 @@ const visaSchema = new mongoose.Schema<TVisa>({
   passportExpirationDate: { type: String, required: true },
   name: { type: String, required: true },
   surname: { type: String, required: true },
-  middleNameOrPatronymic: { type: String, required: true },
+  middleNameOrPatronymic: { type: String },
   birthDate: { type: String, required: true },
   visaType: { type: String, required: true },
   visaDuration: { type: Number, required: true },
