@@ -37,12 +37,12 @@ const visaSchema = new mongoose_1.default.Schema({
     passportExpirationDate: { type: String, required: true },
     name: { type: String, required: true },
     surname: { type: String, required: true },
-    middleNameOrPatronymic: { type: String, required: true },
+    middleNameOrPatronymic: { type: String },
     birthDate: { type: String, required: true },
     visaType: { type: String, required: true },
     visaDuration: { type: Number, required: true },
     entryTimes: { type: String, required: true },
     visaValidityPeriod: { type: String, required: true },
-});
+}, { timestamps: true });
 const Visa = (0, mongoose_1.model)("Visa", visaSchema);
 exports.default = Visa;

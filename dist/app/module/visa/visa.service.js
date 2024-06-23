@@ -13,14 +13,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.visaServices = void 0;
+const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
 const visa_model_1 = __importDefault(require("./visa.model"));
 const createVisa = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield visa_model_1.default.create(payload);
     return result;
 });
-const getAllVisa = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield visa_model_1.default.find();
-    return result;
+const getAllVisa = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const visaQuery = new QueryBuilder_1.default(visa_model_1.default.find(), query)
+        .searchQuery(['name', 'surname', 'referenceNumber', 'passportNumber'])
+        .filterQuery()
+        .paginateQuery()
+        .sortQuery()
+        .fieldFilteringQuery();
+    const visas = yield visaQuery.queryModel;
+    // Fetch total count of documents that match the query without pagination
+    const totalVisas = yield visa_model_1.default.countDocuments();
+    return { visas, totalVisas };
 });
 const getSingleVisa = (referenceNumber) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield visa_model_1.default.findOne({ referenceNumber });
@@ -30,9 +39,14 @@ const deleteVisa = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield visa_model_1.default.findByIdAndDelete(id);
     return result;
 });
+const updateVisa = (id, updatedVisaData) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield visa_model_1.default.findByIdAndUpdate(id, updatedVisaData, { new: true });
+    return result;
+});
 exports.visaServices = {
     createVisa,
     getAllVisa,
     getSingleVisa,
     deleteVisa,
+    updateVisa
 };

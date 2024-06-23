@@ -21,9 +21,8 @@ const visaSchema = new mongoose.Schema<TVisa>({
   visaDuration: { type: Number, required: true },
   entryTimes: { type: String, required: true },
   visaValidityPeriod: { type: String, required: true },
-});
+}, {timestamps:true});
 
 const Visa = model<TVisa>("Visa", visaSchema);
 
 export default Visa;
-

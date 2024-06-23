@@ -17,11 +17,17 @@ const createVisa: RequestHandler = catchAsync(async (req, res, next) => {
 });
 
 const getAllVisa: RequestHandler = catchAsync(async (req, res, next) => {
-  const visa = await visaServices.getAllVisa();
+  const {visas, totalVisas} = await visaServices.getAllVisa(req.query);
+
+  const page = req.query.page ? Number(req.query.page) : 1;
+  const limit = req.query.limit ? Number(req.query.limit) : 10;
+  const totalPages = Math.ceil(totalVisas / limit);
+  
   sendResponse(res, StatusCodes.OK, {
     success: true,
+    meta: {total:totalVisas, page, totalPages, limit},
     message: "Visas are retrieved successfully!",
-    data: visa,
+    data: visas,
   });
 });
 
@@ -46,9 +52,22 @@ const deleteVisa: RequestHandler = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateVisa: RequestHandler = catchAsync(async (req, res, next) => {
+  const payload = req.body;
+  const id = req.params?.id as string;
+  const visa = await visaServices.updateVisa(id, payload);
+  sendResponse(res, StatusCodes.OK, {
+    success: true,
+    message: "Visa inserted successfully!",
+    data: visa,
+  });
+});
+
+
 export const visaControllers = {
   createVisa,
   getAllVisa,
   getSingleVisa,
   deleteVisa,
+  updateVisa
 };
