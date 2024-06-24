@@ -13,9 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.visaServices = void 0;
+const http_status_codes_1 = require("http-status-codes");
 const QueryBuilder_1 = __importDefault(require("../../builder/QueryBuilder"));
+const appError_1 = __importDefault(require("../../errors/appError"));
 const visa_model_1 = __importDefault(require("./visa.model"));
 const createVisa = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const isExistVisa = yield visa_model_1.default.findOne({ referenceNumber: payload === null || payload === void 0 ? void 0 : payload.referenceNumber });
+    if (isExistVisa) {
+        throw new appError_1.default(http_status_codes_1.StatusCodes.CONFLICT, 'Visa already exists with this reference number!');
+    }
     const result = yield visa_model_1.default.create(payload);
     return result;
 });

@@ -1,8 +1,15 @@
+
+import { StatusCodes } from "http-status-codes";
 import QueryBuilder from "../../builder/QueryBuilder";
+import AppError from "../../errors/appError";
 import { TVisa } from "./visa.interface";
 import Visa from "./visa.model";
 
 const createVisa = async (payload: TVisa) => {
+  const isExistVisa = await Visa.findOne({referenceNumber: payload?.referenceNumber});
+  if(isExistVisa){
+    throw new AppError(StatusCodes.CONFLICT ,'Visa already exists with this reference number!')
+  }
   const result = await Visa.create(payload);
   return result;
 };
